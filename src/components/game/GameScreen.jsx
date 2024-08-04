@@ -8,6 +8,7 @@ import Card from "./Card";
 import { useState } from "react";
 
 export default function GameScreen({ onHome, onLose }) {
+//   const [level, setLevel] = useState(2);
   const [level, setLevel] = useState(0);
   const levelDetails = [
     { previousCards: 2, totalCards: 4, maxScore: 5 },
@@ -15,6 +16,7 @@ export default function GameScreen({ onHome, onLose }) {
     { previousCards: 11, totalCards: 12, maxScore: 22 },
   ];
   const [clickedCards, setClickedCards] = useState([]);
+//   const [clickedCards, setClickedCards] = useState([0,1,2,3,4,5,6,7,8,9,10,11,12]);
   const [currentScore, setCurrentScore] = useState(0);
   const [cardsOnDisplay, setCardsOnDisplay] = useState(
     returnRandomIntArray(4, [])
@@ -67,11 +69,6 @@ export default function GameScreen({ onHome, onLose }) {
 
   function onCardClick(clickedValue) {
     if (clickedCards.includes(clickedValue)) {
-      // reset the clickedCards array
-      setClickedCards([]);
-      // reset the currentScore (maybe already does this on unmount)
-      setCurrentScore(0);
-      // display the you lose screen
       onLose();
     } else {
       // add the clicked card to the clickedCards array
@@ -112,7 +109,7 @@ export default function GameScreen({ onHome, onLose }) {
   return (
     <div className="screen">
       <ScoreDisplay currentScore={currentScore}></ScoreDisplay>
-      <CardDisplay>
+      <CardDisplay level={level}>
         {cardsOnDisplay.map((int) => {
           return deck[int];
         })}

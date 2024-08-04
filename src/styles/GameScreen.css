@@ -25,13 +25,24 @@
 }
 
 .card-container{
-    width: 65vw;
-    height: 35vh;
+    width: auto;
+    height: auto;
     background-color: rgba(102, 51, 153, 0.187);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 20px;
+    padding: 20px;
+}
+
+.card-container-level-2{
+    width: auto;
+}
+.card-container-level-3{
+    display: grid;
+    grid-template-rows: repeat(2, 200px);
+    grid-template-columns: repeat(6, 150px);
+    height: auto;
 }
 
 .card{
@@ -39,8 +50,8 @@
     cursor: pointer;
     align-items: center;
     justify-content: center;
-    height: 260px;
-    width: 200px;
+    height: 200px;
+    width: 150px;
     border-radius: 20px;
     background-color: rgba(0, 255, 221, 0.245);
 
