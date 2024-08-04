@@ -43,6 +43,8 @@
     width: 200px;
     border-radius: 20px;
     background-color: rgba(0, 255, 221, 0.245);
+
+    font-size: 80px;
 }
 
 .difficulty-display{

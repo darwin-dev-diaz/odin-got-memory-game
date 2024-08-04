@@ -25,7 +25,11 @@ function App() {
     <HomeScreen key={0} onPlay={() => setCurrentScreen(3)} />,
     <LoseScreen key={1} onHome={() => setCurrentScreen(0)} />,
     <WinScreen key={2} onHome={() => setCurrentScreen(0)} />,
-    <GameScreen key={3} onHome={() => setCurrentScreen(0)} />,
+    <GameScreen
+      key={3}
+      onHome={() => setCurrentScreen(0)}
+      onLose={() => setCurrentScreen(1)}
+    />,
   ];
 
   return (

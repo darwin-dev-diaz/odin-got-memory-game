@@ -1,13 +1,6 @@
-import Card from "./Card";
+/* eslint-disable react/prop-types */
 
-export default function CardDisplay() {
 
-    const test = [...Array(4).keys()];
-  return (
-    <div className="card-container">
-      {test.map((item, i) => {
-        return <Card key={i}></Card>;
-      })}
-    </div>
-  );
+export default function CardDisplay({ children }) {
+  return <div className="card-container">{children}</div>;
 }
