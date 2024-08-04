@@ -8,20 +8,16 @@ import Card from "./Card";
 import { useState } from "react";
 
 export default function GameScreen({ onHome, onLose }) {
+  const [level, setLevel] = useState(0);
+  const levelDetails = [
+    { previousCards: 2, totalCards: 4, maxScore: 5 },
+    { previousCards: 5, totalCards: 7, maxScore: 13 },
+  ];
   const [clickedCards, setClickedCards] = useState([]);
   const [currentScore, setCurrentScore] = useState(0);
   const [cardsOnDisplay, setCardsOnDisplay] = useState(
-    returnShuffledArray([...Array(4).keys()])
+    returnRandomIntArray(4, [])
   );
-
-  function returnRandomIntArray(quantity) {
-    const arr = [];
-    while (arr.length < quantity) {
-      var candidateInt = Math.floor(Math.random() * 22);
-      if (arr.indexOf(candidateInt) === -1) arr.push(candidateInt);
-    }
-    return arr;
-  }
 
   const deck = [
     ...Array(22)
@@ -36,6 +32,22 @@ export default function GameScreen({ onHome, onLose }) {
         );
       }),
   ];
+
+  function returnRandomIntArray(quantity, newClickedCards) {
+    // returns an specified number of random ints from 0-21
+    // makes sure that the int isnt in clickedCards
+    // makes sure the ints dont repeat
+    const arr = [];
+    while (arr.length < quantity) {
+      var candidateInt = Math.floor(Math.random() * 22);
+      if (
+        arr.indexOf(candidateInt) === -1 &&
+        newClickedCards.indexOf(candidateInt) === -1
+      )
+        arr.push(candidateInt);
+    }
+    return arr;
+  }
 
   function returnShuffledArray(array) {
     array = typeof array === "undefined" ? cardsOnDisplay : array;
@@ -54,8 +66,6 @@ export default function GameScreen({ onHome, onLose }) {
 
   function onCardClick(clickedValue) {
     if (clickedCards.includes(clickedValue)) {
-      // if the card has already been clicked
-      console.log("The card is already in the array");
       // reset the clickedCards array
       setClickedCards([]);
       // reset the currentScore (maybe already does this on unmount)
@@ -63,17 +73,33 @@ export default function GameScreen({ onHome, onLose }) {
       // display the you lose screen
       onLose();
     } else {
-      // if the card has not been cliked yet
-      console.log("The card is not in the array");
       // add the clicked card to the clickedCards array
-      setClickedCards([...clickedCards, clickedValue]);
-      // update the current score
+      const newClickedCards = [...clickedCards, clickedValue];
+      setClickedCards(newClickedCards);
       setCurrentScore(currentScore + 1);
-      //////// LATER if the current score is higher than the best score, update the best score as well
-      // shuffle the deck
-      setCardsOnDisplay(returnShuffledArray());
-      console.log({ cardsOnDisplay });
-      // show the new deck
+      // shuffle the deck with appropriate number of clicked cards. This depends on
+      if (newClickedCards.length === 1) {
+        setCardsOnDisplay(
+          returnShuffledArray([
+            newClickedCards[0],
+            ...returnRandomIntArray(3, newClickedCards),
+          ])
+        );
+      } else {
+        console.log(newClickedCards)
+        const previouslyClickedCards = returnShuffledArray(
+          newClickedCards
+        ).slice(0, levelDetails[level].previousCards);
+
+        const nonClickedCards = returnRandomIntArray(
+          levelDetails[level].totalCards - levelDetails[level].previousCards,
+          newClickedCards
+        );
+
+        setCardsOnDisplay(
+          returnShuffledArray([...previouslyClickedCards, ...nonClickedCards])
+        );
+      }
     }
   }
 
@@ -81,7 +107,7 @@ export default function GameScreen({ onHome, onLose }) {
     <div className="screen">
       <ScoreDisplay currentScore={currentScore}></ScoreDisplay>
       <CardDisplay>
-        {returnRandomIntArray(4).map((int) => {
+        {cardsOnDisplay.map((int) => {
           return deck[int];
         })}
       </CardDisplay>
