@@ -4,6 +4,7 @@ import "./styles/App.css";
 import HomeScreen from "./components/HomeScreen";
 import LoseScreen from "./components/LoseScreen";
 import WinScreen from "./components/WinScreen";
+import GameScreen from "./components/game/GameScreen";
 
 function App() {
   // const [characterId, setCharacterId] = useState(0);
@@ -19,15 +20,19 @@ function App() {
   //   })();
   // }, [characterId]);
 
-  const [currentScreen, setCurrentScreen] = useState("home");
+  const [currentScreen, setCurrentScreen] = useState(3);
+  const screenArray = [
+    <HomeScreen key={0} onPlay={() => setCurrentScreen(1)} />,
+    <LoseScreen key={1} onHome={() => setCurrentScreen(0)} />,
+    <WinScreen key={2} onHome={() => setCurrentScreen(0)} />,
+    <GameScreen key={3} onHome={() => setCurrentScreen(0)} />,
+  ];
 
-  return <>
-    <div className="app">
-        <HomeScreen></HomeScreen>
-        <LoseScreen></LoseScreen>
-        <WinScreen></WinScreen>
-    </div>
-  </>;
+  return (
+    <>
+      <div className="app">{screenArray[currentScreen]}</div>
+    </>
+  );
 }
 
 export default App;
