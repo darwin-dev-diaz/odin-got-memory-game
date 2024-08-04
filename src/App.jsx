@@ -22,7 +22,7 @@ function App() {
 
   const [currentScreen, setCurrentScreen] = useState(3);
   const screenArray = [
-    <HomeScreen key={0} onPlay={() => setCurrentScreen(1)} />,
+    <HomeScreen key={0} onPlay={() => setCurrentScreen(3)} />,
     <LoseScreen key={1} onHome={() => setCurrentScreen(0)} />,
     <WinScreen key={2} onHome={() => setCurrentScreen(0)} />,
     <GameScreen key={3} onHome={() => setCurrentScreen(0)} />,
