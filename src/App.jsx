@@ -1,8 +1,9 @@
 import { useState } from "react";
-import "./styles/reset.css
-
-";
+import "./styles/reset.css";
 import "./styles/App.css";
+import HomeScreen from "./components/HomeScreen";
+import LoseScreen from "./components/LoseScreen";
+import WinScreen from "./components/WinScreen";
 
 function App() {
   // const [characterId, setCharacterId] = useState(0);
@@ -20,7 +21,13 @@ function App() {
 
   const [currentScreen, setCurrentScreen] = useState("home");
 
-  return <></>;
+  return <>
+    <div className="app">
+        <HomeScreen></HomeScreen>
+        <LoseScreen></LoseScreen>
+        <WinScreen></WinScreen>
+    </div>
+  </>;
 }
 
 export default App;
