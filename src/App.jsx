@@ -1,34 +1,26 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import "./styles/reset.css
+
+";
+import "./styles/App.css";
 
 function App() {
-  const [characterId, setCharacterId] = useState(0);
-  const [imageUrl, setImageUrl] = useState(null);
+  // const [characterId, setCharacterId] = useState(0);
+  // const [imageUrl, setImageUrl] = useState(null);
 
-  useEffect(() => {
-    fetch(`https://thronesapi.com/api/v2/Characters/${characterId}`, {
-      mode: "cors",
-    })
-      .then((response) => response.json())
-      .then((json) => setImageUrl(json.imageUrl));
-  }, [characterId]);
+  // useEffect(() => {
+  //   (async function setNewCharacterImage() {
+  //     const response = await fetch(
+  //       `https://thronesapi.com/api/v2/Characters/${characterId}`
+  //     );
+  //     const json = await response.json();
+  //     setImageUrl(json.imageUrl);
+  //   })();
+  // }, [characterId]);
 
-  return (
-    <>
-      <select
-        name="characters"
-        id="characterNumber"
-        onChange={(e) => setCharacterId(Number(e.target.value))}
-      >
-        <option value="0">0</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-      </select>
+  const [currentScreen, setCurrentScreen] = useState("home");
 
-      <img src={imageUrl} alt="" />
-    </>
-  );
+  return <></>;
 }
 
 export default App;
