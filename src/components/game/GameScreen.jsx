@@ -8,19 +8,25 @@ import Card from "./Card";
 import { useState } from "react";
 
 export default function GameScreen({ onHome, onLose }) {
-//   const [level, setLevel] = useState(2);
-  const [level, setLevel] = useState(0);
+//   const [level, setLevel] = useState(1);
+    const [level, setLevel] = useState(0);
   const levelDetails = [
     { previousCards: 2, totalCards: 4, maxScore: 5 },
     { previousCards: 5, totalCards: 7, maxScore: 13 },
     { previousCards: 11, totalCards: 12, maxScore: 22 },
   ];
-  const [clickedCards, setClickedCards] = useState([]);
-//   const [clickedCards, setClickedCards] = useState([0,1,2,3,4,5,6,7,8,9,10,11,12]);
+    const [clickedCards, setClickedCards] = useState([]);
+//   const [clickedCards, setClickedCards] = useState([
+//     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+//   ]);
+//   const [currentScore, setCurrentScore] = useState(11);
   const [currentScore, setCurrentScore] = useState(0);
   const [cardsOnDisplay, setCardsOnDisplay] = useState(
     returnRandomIntArray(4, [])
   );
+  //   const [cardsOnDisplay, setCardsOnDisplay] = useState(
+  //     returnRandomIntArray(4, [])
+  //   );
 
   const deck = [
     ...Array(22)
@@ -76,6 +82,11 @@ export default function GameScreen({ onHome, onLose }) {
       setClickedCards(newClickedCards);
       const newCurrentScore = currentScore + 1;
       setCurrentScore(newCurrentScore);
+      let newLevel = level;
+      if (newCurrentScore === levelDetails[level].maxScore) {
+        newLevel = newLevel + 1;
+        setLevel(newLevel);
+      }
       // shuffle the deck with appropriate number of clicked cards. This depends on level and current number of clicked cards
       if (newClickedCards.length === 1) {
         setCardsOnDisplay(
@@ -88,20 +99,17 @@ export default function GameScreen({ onHome, onLose }) {
         console.log(newClickedCards);
         const previouslyClickedCards = returnShuffledArray(
           newClickedCards
-        ).slice(0, levelDetails[level].previousCards);
+        ).slice(0, levelDetails[newLevel].previousCards);
 
         const nonClickedCards = returnRandomIntArray(
-          levelDetails[level].totalCards - levelDetails[level].previousCards,
+          levelDetails[newLevel].totalCards -
+            levelDetails[newLevel].previousCards,
           newClickedCards
         );
 
         setCardsOnDisplay(
           returnShuffledArray([...previouslyClickedCards, ...nonClickedCards])
         );
-
-        if (newCurrentScore === levelDetails[level].maxScore - 1) {
-          setLevel(level + 1);
-        }
       }
     }
   }
@@ -116,6 +124,13 @@ export default function GameScreen({ onHome, onLose }) {
       </CardDisplay>
       <DifficultyDisplay></DifficultyDisplay>
       <GameUI onHome={onHome}></GameUI>
+      <button
+        onClick={() => {
+          console.log({ level, clickedCards, currentScore, cardsOnDisplay });
+        }}
+      >
+        TEST
+      </button>
     </div>
   );
 }
