@@ -6,6 +6,7 @@ import DifficultyDisplay from "./DifficultyDisplay";
 import GameUI from "./GameUI";
 import Card from "./Card";
 import TestCard from "./TestCard"
+import TestCard2 from "./TestCard2"
 
 import { useState } from "react";
 
@@ -124,7 +125,8 @@ export default function GameScreen({
 
   return (
     <div className="screen">
-      <ScoreDisplay
+      <TestCard2></TestCard2>
+      {/* <ScoreDisplay
         currentScore={currentScore}
         bestScore={bestScore}
       ></ScoreDisplay>
@@ -134,7 +136,7 @@ export default function GameScreen({
         })}
       </CardDisplay>
       <DifficultyDisplay level={level}></DifficultyDisplay>
-      <GameUI onHome={onHome}></GameUI>
+      <GameUI onHome={onHome}></GameUI> */}
     </div>
   );
 }

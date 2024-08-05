@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import "../../styles/TestCard.css";
 
-export default function TestCard({ value, onClick }) {
+export default function TestCardRotatingOne({ value, front }) {
   const [characterInfo, setCharacterInfo] = useState({
     characterName: "",
     characterImageUrl: "",
@@ -61,24 +61,17 @@ export default function TestCard({ value, onClick }) {
                 `;
   };
   const removeListener = () => {
-    inputRef.current.style.transform = `
-        scale3d(1, 1, 1)
-        rotate3d(
-            0,
-            0,
-            0,
-            0
-            `;
+    inputRef.current.style.transform = "";
     inputRef.current.style.background = "";
   };
   useEffect(() => {});
   // FOR ROTATION
   return (
     <div
-      className="card-app"
+      className={`card-app card${front ? "Front" : "Back"}`}
+      id={front ? "front" : "back"}
       onClick={() => {
         removeListener();
-        onClick();
       }}
     >
       <div
