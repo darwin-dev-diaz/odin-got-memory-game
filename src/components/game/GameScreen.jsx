@@ -16,17 +16,10 @@ export default function GameScreen({ onHome, onLose, onWin }) {
     { previousCards: 11, totalCards: 12, maxScore: 22 },
   ];
   const [clickedCards, setClickedCards] = useState([]);
-  //   const [clickedCards, setClickedCards] = useState([
-  //     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
-  //   ]);
-  //   const [currentScore, setCurrentScore] = useState(11);
   const [currentScore, setCurrentScore] = useState(0);
   const [cardsOnDisplay, setCardsOnDisplay] = useState(
     returnRandomIntArray(4, [])
   );
-  //   const [cardsOnDisplay, setCardsOnDisplay] = useState(
-  //     returnRandomIntArray(4, [])
-  //   );
 
   const deck = [
     ...Array(22)
@@ -116,6 +109,7 @@ export default function GameScreen({ onHome, onLose, onWin }) {
       }
     }
   }
+
 
   return (
     <div className="screen">
