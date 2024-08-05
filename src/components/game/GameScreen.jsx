@@ -5,6 +5,8 @@ import CardDisplay from "./CardDisplay";
 import DifficultyDisplay from "./DifficultyDisplay";
 import GameUI from "./GameUI";
 import Card from "./Card";
+import TestCard from "./TestCard"
+
 import { useState } from "react";
 
 export default function GameScreen({
@@ -32,11 +34,11 @@ export default function GameScreen({
       .keys()
       .map((item) => {
         return (
-          <Card
+          <TestCard
             value={item}
             key={item}
             onClick={() => onCardClick(item)}
-          ></Card>
+          ></TestCard>
         );
       }),
   ];
@@ -73,6 +75,7 @@ export default function GameScreen({
   }
 
   function onCardClick(clickedValue) {
+    console.log("Test")
     if (clickedCards.includes(clickedValue)) {
       if (currentScore > bestScore) {
         setBestScore(currentScore);
@@ -102,7 +105,6 @@ export default function GameScreen({
           ])
         );
       } else {
-        console.log(newClickedCards);
         const previouslyClickedCards = returnShuffledArray(
           newClickedCards
         ).slice(0, levelDetails[newLevel].previousCards);
@@ -133,13 +135,6 @@ export default function GameScreen({
       </CardDisplay>
       <DifficultyDisplay level={level}></DifficultyDisplay>
       <GameUI onHome={onHome}></GameUI>
-      <button
-        onClick={() => {
-          console.log({ level, clickedCards, currentScore, cardsOnDisplay });
-        }}
-      >
-        TEST
-      </button>
     </div>
   );
 }

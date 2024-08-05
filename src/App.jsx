@@ -6,19 +6,9 @@ import LoseScreen from "./components/LoseScreen";
 import WinScreen from "./components/WinScreen";
 import GameScreen from "./components/game/GameScreen";
 
-function App() {
-  // const [characterId, setCharacterId] = useState(0);
-  // const [imageUrl, setImageUrl] = useState(null);
 
-  // useEffect(() => {
-  //   (async function setNewCharacterImage() {
-  //     const response = await fetch(
-  //       `https://thronesapi.com/api/v2/Characters/${characterId}`
-  //     );
-  //     const json = await response.json();
-  //     setImageUrl(json.imageUrl);
-  //   })();
-  // }, [characterId]);
+
+function App() {
 
   const [currentScreen, setCurrentScreen] = useState(3);
   const [bestScore, setBestScore] = useState(0);

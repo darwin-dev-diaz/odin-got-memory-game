@@ -1,7 +1,7 @@
 .screen {
   height: 100%;
   width: 100%;
-  background-color: rgb(230, 184, 184);
+  background-color: rgb(180, 180, 180);
   display: flex;
   gap: 20px;
   flex-direction: column;
@@ -40,8 +40,8 @@
 }
 .card-container-level-3 {
   display: grid;
-  grid-template-rows: repeat(2, 200px);
-  grid-template-columns: repeat(6, 150px);
+  grid-template-rows: repeat(2, 300px);
+  grid-template-columns: repeat(6, 200px);
   height: auto;
 }
 
@@ -52,7 +52,7 @@
   cursor: pointer;
   align-items: center;
   justify-content: center;
-  height: 250px;
+  height: 300px;
   width: 200px;
   border-radius: 10px;
   background-color: rgba(0, 255, 221, 0.245);
@@ -108,3 +108,5 @@
   display: flex;
   gap: 20px;
 }
+
+
