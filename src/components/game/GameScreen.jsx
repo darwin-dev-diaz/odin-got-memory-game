@@ -7,7 +7,13 @@ import GameUI from "./GameUI";
 import Card from "./Card";
 import { useState } from "react";
 
-export default function GameScreen({ onHome, onLose, onWin }) {
+export default function GameScreen({
+  onHome,
+  onLose,
+  onWin,
+  bestScore,
+  setBestScore,
+}) {
   //   const [level, setLevel] = useState(1);
   const [level, setLevel] = useState(0);
   const levelDetails = [
@@ -68,6 +74,9 @@ export default function GameScreen({ onHome, onLose, onWin }) {
 
   function onCardClick(clickedValue) {
     if (clickedCards.includes(clickedValue)) {
+      if (currentScore > bestScore) {
+        setBestScore(currentScore);
+      }
       onLose();
     } else {
       // add the clicked card to the clickedCards array
@@ -75,6 +84,7 @@ export default function GameScreen({ onHome, onLose, onWin }) {
       setClickedCards(newClickedCards);
       const newCurrentScore = currentScore + 1;
       if (newCurrentScore === 22) {
+        setBestScore(22);
         onWin();
       }
       setCurrentScore(newCurrentScore);
@@ -110,10 +120,12 @@ export default function GameScreen({ onHome, onLose, onWin }) {
     }
   }
 
-
   return (
     <div className="screen">
-      <ScoreDisplay currentScore={currentScore}></ScoreDisplay>
+      <ScoreDisplay
+        currentScore={currentScore}
+        bestScore={bestScore}
+      ></ScoreDisplay>
       <CardDisplay level={level}>
         {cardsOnDisplay.map((int) => {
           return deck[int];

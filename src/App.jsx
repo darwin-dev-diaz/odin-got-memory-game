@@ -21,6 +21,7 @@ function App() {
   // }, [characterId]);
 
   const [currentScreen, setCurrentScreen] = useState(3);
+  const [bestScore, setBestScore] = useState(0);
   const screenArray = [
     <HomeScreen key={0} onPlay={() => setCurrentScreen(3)} />,
     <LoseScreen key={1} onHome={() => setCurrentScreen(0)} />,
@@ -30,6 +31,8 @@ function App() {
       onHome={() => setCurrentScreen(0)}
       onLose={() => setCurrentScreen(1)}
       onWin={() => setCurrentScreen(2)}
+      bestScore={bestScore}
+      setBestScore={setBestScore}
     />,
   ];
 
