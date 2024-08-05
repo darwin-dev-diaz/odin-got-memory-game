@@ -8,7 +8,6 @@ export default function Card({ value, onClick }) {
     characterImageUrl: "",
   });
 
-  console.log(characterInfo.characterName);
   useEffect(() => {
     async function getCharacterInfo(id) {
       const response = await fetch(
@@ -23,17 +22,20 @@ export default function Card({ value, onClick }) {
       setCharacterInfo({ characterName: name, characterImageUrl: imageUrl });
     }
     getCharacterInfo(value);
-  }, []);
+  }, [value]);
 
   return (
-    <div className="card" onClick={onClick}>
-      <div className="character-image-container">
-        <img className="character-image"
-          src={characterInfo.characterImageUrl}
-          alt={`Image of ${characterInfo.characterName} from the show Game of Thrones`}
-        />
+    <>
+      <div className="card" onClick={onClick}>
+        <div className="character-image-container">
+          <img
+            className="character-image"
+            src={characterInfo.characterImageUrl}
+            alt={`Image of ${characterInfo.characterName} from the show Game of Thrones`}
+          />
+        </div>
+        <div className="character-name">{characterInfo.characterName}</div>
       </div>
-      <div className="character-name">{characterInfo.characterName}</div>
-    </div>
+    </>
   );
 }
