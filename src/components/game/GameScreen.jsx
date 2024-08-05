@@ -5,7 +5,7 @@ import CardDisplay from "./CardDisplay";
 import DifficultyDisplay from "./DifficultyDisplay";
 import GameUI from "./GameUI";
 import Card from "./Card";
-import TestCard from "./TestCard"
+
 import TestCard2 from "./TestCard2"
 
 import { useState } from "react";
@@ -35,11 +35,11 @@ export default function GameScreen({
       .keys()
       .map((item) => {
         return (
-          <TestCard
+          <TestCard2
             value={item}
             key={item}
             onClick={() => onCardClick(item)}
-          ></TestCard>
+          ></TestCard2>
         );
       }),
   ];
@@ -125,8 +125,8 @@ export default function GameScreen({
 
   return (
     <div className="screen">
-      <TestCard2></TestCard2>
-      {/* <ScoreDisplay
+      {/* <TestCard2></TestCard2> */}
+      <ScoreDisplay
         currentScore={currentScore}
         bestScore={bestScore}
       ></ScoreDisplay>
@@ -136,7 +136,7 @@ export default function GameScreen({
         })}
       </CardDisplay>
       <DifficultyDisplay level={level}></DifficultyDisplay>
-      <GameUI onHome={onHome}></GameUI> */}
+      <GameUI onHome={onHome}></GameUI>
     </div>
   );
 }

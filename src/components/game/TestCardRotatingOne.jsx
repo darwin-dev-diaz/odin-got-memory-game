@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import "../../styles/TestCard.css";
 
-export default function TestCardRotatingOne({ value, front }) {
+export default function TestCardRotatingOne({ value }) {
   const [characterInfo, setCharacterInfo] = useState({
     characterName: "",
     characterImageUrl: "",
@@ -68,8 +68,8 @@ export default function TestCardRotatingOne({ value, front }) {
   // FOR ROTATION
   return (
     <div
-      className={`card-app card${front ? "Front" : "Back"}`}
-      id={front ? "front" : "back"}
+      className="card-app cardFront"
+      id={"front" + value}
       onClick={() => {
         removeListener();
       }}
