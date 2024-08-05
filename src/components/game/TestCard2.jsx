@@ -3,11 +3,10 @@ import cardBack from "./card-back.jpg";
 import "../../styles/TestCard2.css";
 import TestCardRotatingOne from "./TestCardRotatingOne";
 
-export default function TestCard2({ value, onClick }) {
-  const containerName = "card-conatiner " + value;
+export default function TestCard2({ value, onClick, flipped }) {
   function onFlip() {
-    const front = document.getElementById("front"+value);
-    const back = document.getElementById("back"+value);
+    const front = document.getElementById("front" + value);
+    const back = document.getElementById("back" + value);
     front.classList.toggle("flipped");
     back.classList.toggle("flipped");
   }
@@ -15,12 +14,18 @@ export default function TestCard2({ value, onClick }) {
 
   return (
     <>
-      <div className="container" onClick={onFlip}>
+      <div className="container" onClick={onClick}>
         <div className="card-flippable">
-          <div id={"back"+value} className="cardBack">
+          <div
+            id={"back" + value}
+            className={`cardBack ${flipped ? "flipped" : ""}`}
+          >
             <img className="card-back-image" src={cardBack} alt="" />
           </div>
-          <TestCardRotatingOne value={value}></TestCardRotatingOne>
+          <TestCardRotatingOne
+            flipped={flipped}
+            value={value}
+          ></TestCardRotatingOne>
         </div>
       </div>
     </>

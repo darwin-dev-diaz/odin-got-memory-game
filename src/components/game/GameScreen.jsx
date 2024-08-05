@@ -4,7 +4,6 @@ import ScoreDisplay from "./ScoreDisplay";
 import CardDisplay from "./CardDisplay";
 import DifficultyDisplay from "./DifficultyDisplay";
 import GameUI from "./GameUI";
-import Card from "./Card";
 
 import TestCard2 from "./TestCard2"
 
@@ -29,6 +28,7 @@ export default function GameScreen({
   const [cardsOnDisplay, setCardsOnDisplay] = useState(
     returnRandomIntArray(4, [])
   );
+  const [cardsFlipped, setCardsFlipped] = useState(true);
 
   const deck = [
     ...Array(22)
@@ -39,6 +39,7 @@ export default function GameScreen({
             value={item}
             key={item}
             onClick={() => onCardClick(item)}
+            flipped={cardsFlipped}
           ></TestCard2>
         );
       }),
@@ -76,7 +77,6 @@ export default function GameScreen({
   }
 
   function onCardClick(clickedValue) {
-    console.log("Test")
     if (clickedCards.includes(clickedValue)) {
       if (currentScore > bestScore) {
         setBestScore(currentScore);
@@ -125,7 +125,6 @@ export default function GameScreen({
 
   return (
     <div className="screen">
-      {/* <TestCard2></TestCard2> */}
       <ScoreDisplay
         currentScore={currentScore}
         bestScore={bestScore}
@@ -137,6 +136,7 @@ export default function GameScreen({
       </CardDisplay>
       <DifficultyDisplay level={level}></DifficultyDisplay>
       <GameUI onHome={onHome}></GameUI>
+      <button onClick={()=>{setCardsFlipped(!cardsFlipped)}}>TEST</button>
     </div>
   );
 }
