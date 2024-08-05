@@ -84,6 +84,17 @@
   padding: 30px;
   background-color: rgba(0, 0, 0, 0.307);
   margin-bottom: auto;
+  text-transform: uppercase;
+}
+
+.difficulty-display.easy{
+    color: rgb(68, 204, 68);
+}
+.difficulty-display.medium{
+    color: rgb(204, 195, 68);
+}
+.difficulty-display.hard{
+    color: rgb(204, 72, 68);
 }
 
 .ui {

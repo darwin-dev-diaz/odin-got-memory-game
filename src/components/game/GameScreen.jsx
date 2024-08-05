@@ -119,7 +119,7 @@ export default function GameScreen({ onHome, onLose, onWin }) {
           return deck[int];
         })}
       </CardDisplay>
-      <DifficultyDisplay></DifficultyDisplay>
+      <DifficultyDisplay level={level}></DifficultyDisplay>
       <GameUI onHome={onHome}></GameUI>
       <button
         onClick={() => {
