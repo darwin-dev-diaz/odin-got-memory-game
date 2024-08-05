@@ -29,6 +29,7 @@ function App() {
       key={3}
       onHome={() => setCurrentScreen(0)}
       onLose={() => setCurrentScreen(1)}
+      onWin={() => setCurrentScreen(2)}
     />,
   ];
 

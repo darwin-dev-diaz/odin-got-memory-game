@@ -7,19 +7,19 @@ import GameUI from "./GameUI";
 import Card from "./Card";
 import { useState } from "react";
 
-export default function GameScreen({ onHome, onLose }) {
-//   const [level, setLevel] = useState(1);
-    const [level, setLevel] = useState(0);
+export default function GameScreen({ onHome, onLose, onWin }) {
+  //   const [level, setLevel] = useState(1);
+  const [level, setLevel] = useState(0);
   const levelDetails = [
     { previousCards: 2, totalCards: 4, maxScore: 5 },
     { previousCards: 5, totalCards: 7, maxScore: 13 },
     { previousCards: 11, totalCards: 12, maxScore: 22 },
   ];
-    const [clickedCards, setClickedCards] = useState([]);
-//   const [clickedCards, setClickedCards] = useState([
-//     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
-//   ]);
-//   const [currentScore, setCurrentScore] = useState(11);
+  const [clickedCards, setClickedCards] = useState([]);
+  //   const [clickedCards, setClickedCards] = useState([
+  //     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+  //   ]);
+  //   const [currentScore, setCurrentScore] = useState(11);
   const [currentScore, setCurrentScore] = useState(0);
   const [cardsOnDisplay, setCardsOnDisplay] = useState(
     returnRandomIntArray(4, [])
@@ -81,6 +81,9 @@ export default function GameScreen({ onHome, onLose }) {
       const newClickedCards = [...clickedCards, clickedValue];
       setClickedCards(newClickedCards);
       const newCurrentScore = currentScore + 1;
+      if (newCurrentScore === 22) {
+        onWin();
+      }
       setCurrentScore(newCurrentScore);
       let newLevel = level;
       if (newCurrentScore === levelDetails[level].maxScore) {
