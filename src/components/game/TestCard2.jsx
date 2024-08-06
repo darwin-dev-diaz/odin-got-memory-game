@@ -5,7 +5,7 @@ import "../../styles/TestCard2.css";
 import Card from "./Card";
 
 
-export default function TestCard2({ value, onClick, flipped, characterObj }) {
+export default function TestCard2({onClick, flipped, characterObj }) {
   return (
     <>
       <div className="container" onClick={onClick}>
@@ -18,7 +18,6 @@ export default function TestCard2({ value, onClick, flipped, characterObj }) {
           </div>
           <Card
             flipped={flipped}
-            value={value}
             characterObj={characterObj}
           ></Card>
         </div>

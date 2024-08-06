@@ -15,7 +15,7 @@ export default function GameScreen({
   bestScore,
   setBestScore,
 }) {
-  //   const [level, setLevel] = useState(1);
+
   const [level, setLevel] = useState(0);
   const levelDetails = [
     { previousCards: 2, totalCards: 4, maxScore: 5 },
@@ -41,14 +41,14 @@ export default function GameScreen({
       const json = await response.json();
       const name = json.firstName + " " + json.lastName;
       const imageUrl = json.imageUrl;
-      setCharacterInfoList((prevList)=>[...prevList , {name, imageUrl}]);
+      setCharacterInfoList((prevList) => [...prevList, { name, imageUrl }]);
     }
 
-    const ids = [...new Array(22).keys()]
-    ids.forEach(id=> getCharacterInfo(id))
+    const ids = [...new Array(22).keys()];
+    ids.forEach((id) => getCharacterInfo(id));
   }, []);
 
-  console.log({characterInfoList})
+  console.log({ characterInfoList });
 
   const deck = [
     ...Array(22)
@@ -56,9 +56,8 @@ export default function GameScreen({
       .map((item) => {
         return (
           <TestCard2
-            value={item}
-            characterObj={characterInfoList[item]}
             key={item}
+            characterObj={characterInfoList[item]}
             onClick={() => {
               onCardClick(item);
             }}
