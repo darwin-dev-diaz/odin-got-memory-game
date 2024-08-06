@@ -4,6 +4,7 @@ import "../../styles/TestCard2.css";
 // import TestCardRotatingOne from "./TestCardRotatingOne";
 import Card from "./Card";
 
+
 export default function TestCard2({ value, onClick, flipped }) {
 
   return (
