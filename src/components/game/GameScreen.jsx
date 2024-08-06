@@ -6,7 +6,7 @@ import DifficultyDisplay from "./DifficultyDisplay";
 import GameUI from "./GameUI";
 import TestCard2 from "./TestCard2";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function GameScreen({
   onHome,
@@ -28,6 +28,28 @@ export default function GameScreen({
     returnRandomIntArray(4, [])
   );
 
+  const [characterInfoList, setCharacterInfoList] = useState([]);
+
+  useEffect(() => {
+    async function getCharacterInfo(id) {
+      const response = await fetch(
+        `https://thronesapi.com/api/v2/Characters/${id}`,
+        {
+          mode: "cors",
+        }
+      );
+      const json = await response.json();
+      const name = json.firstName + " " + json.lastName;
+      const imageUrl = json.imageUrl;
+      setCharacterInfoList((prevList)=>[...prevList , {name, imageUrl}]);
+    }
+
+    const ids = [...new Array(22).keys()]
+    ids.forEach(id=> getCharacterInfo(id))
+  }, []);
+
+  console.log({characterInfoList})
+
   const deck = [
     ...Array(22)
       .keys()
@@ -35,6 +57,7 @@ export default function GameScreen({
         return (
           <TestCard2
             value={item}
+            characterObj={characterInfoList[item]}
             key={item}
             onClick={() => {
               onCardClick(item);
