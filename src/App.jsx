@@ -5,11 +5,9 @@ import HomeScreen from "./components/HomeScreen";
 import LoseScreen from "./components/LoseScreen";
 import WinScreen from "./components/WinScreen";
 import GameScreen from "./components/game/GameScreen";
-
-
+import backgroundVideo from "./assets/got-video.mp4"
 
 function App() {
-
   const [currentScreen, setCurrentScreen] = useState(3);
   const [bestScore, setBestScore] = useState(0);
   const screenArray = [
@@ -28,6 +26,12 @@ function App() {
 
   return (
     <>
+      <video id="background-video" autoPlay loop muted>
+        <source
+          src={backgroundVideo}
+          type="video/mp4"
+        />
+      </video>
       <div className="app">{screenArray[currentScreen]}</div>
     </>
   );

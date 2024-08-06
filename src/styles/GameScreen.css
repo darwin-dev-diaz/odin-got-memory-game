@@ -1,7 +1,6 @@
 .screen {
   height: 100%;
   width: 100%;
-  background-color: rgb(180, 180, 180);
   display: flex;
   gap: 20px;
   flex-direction: column;
