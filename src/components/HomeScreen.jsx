@@ -8,9 +8,8 @@ export default function HomeScreen({onPlay}) {
       <button className="play-button" onClick={onPlay}>Play</button>
       <div className="home-screen-info">
         For the best experience, please enable game music using the melody
-        button below !
+        button below!
       </div>
-      <div className="ui"></div>
     </div>
   );
 }

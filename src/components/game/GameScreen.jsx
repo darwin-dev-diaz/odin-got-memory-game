@@ -3,7 +3,6 @@ import "../../styles/GameScreen.css";
 import ScoreDisplay from "./ScoreDisplay";
 import CardDisplay from "./CardDisplay";
 import DifficultyDisplay from "./DifficultyDisplay";
-import GameUI from "./GameUI";
 import TestCard2 from "./TestCard2";
 
 import { useState, useEffect } from "react";
@@ -156,7 +155,6 @@ export default function GameScreen({
         })}
       </CardDisplay>
       <DifficultyDisplay level={level}></DifficultyDisplay>
-      <GameUI onHome={onHome}></GameUI>
     </div>
   );
 }

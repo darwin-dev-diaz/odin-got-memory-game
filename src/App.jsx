@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./styles/reset.css";
 import "./styles/App.css";
 import HomeScreen from "./components/HomeScreen";
 import LoseScreen from "./components/LoseScreen";
 import WinScreen from "./components/WinScreen";
 import GameScreen from "./components/game/GameScreen";
-import backgroundVideo from "./assets/got-video.mp4"
+import backgroundVideo from "./assets/got-video.mp4";
+import backgroundSong from "./assets/got-song.mp3";
 
 function App() {
-  const [currentScreen, setCurrentScreen] = useState(3);
+  const [currentScreen, setCurrentScreen] = useState(0);
   const [bestScore, setBestScore] = useState(0);
+  const [audioPlaying, setAudioPlaying] = useState(false);
   const screenArray = [
     <HomeScreen key={0} onPlay={() => setCurrentScreen(3)} />,
     <LoseScreen key={1} onHome={() => setCurrentScreen(0)} />,
@@ -26,13 +28,26 @@ function App() {
 
   return (
     <>
+      <audio autoPlay loop src={backgroundSong}></audio>
       <video id="background-video" autoPlay loop muted>
-        <source
-          src={backgroundVideo}
-          type="video/mp4"
-        />
+        <source src={backgroundVideo} type="video/mp4" />
       </video>
       <div className="app">{screenArray[currentScreen]}</div>
+      <button
+        onClick={() => {
+          const audio = document.querySelector("audio");
+          if (audioPlaying) {
+            audio.pause();
+            setAudioPlaying(false);
+          } else {
+            audio.volume = 0.6;
+            audio.play();
+            setAudioPlaying(true);
+          }
+        }}
+      >
+        TOGGLE MUSIC
+      </button>
     </>
   );
 }
