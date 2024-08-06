@@ -45,7 +45,7 @@
   height: auto;
 }
 
-.card {
+.cardFront {
   position: relative;
   display: flex;
   flex-direction: column;

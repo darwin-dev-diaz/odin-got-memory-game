@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export default function Card({ value, onClick }) {
+export default function Card({ value, flipped }) {
   const [characterInfo, setCharacterInfo] = useState({
     characterName: "",
     characterImageUrl: "",
@@ -26,7 +26,7 @@ export default function Card({ value, onClick }) {
 
   return (
     <>
-      <div className="card" onClick={onClick}>
+      <div className={`cardFront ${flipped ? "flipped" : ""}`} id="front">
         <div className="character-image-container">
           <img
             className="character-image"

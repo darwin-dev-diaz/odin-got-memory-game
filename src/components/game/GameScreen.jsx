@@ -4,8 +4,7 @@ import ScoreDisplay from "./ScoreDisplay";
 import CardDisplay from "./CardDisplay";
 import DifficultyDisplay from "./DifficultyDisplay";
 import GameUI from "./GameUI";
-
-import TestCard2 from "./TestCard2"
+import TestCard2 from "./TestCard2";
 
 import { useState } from "react";
 
@@ -28,7 +27,7 @@ export default function GameScreen({
   const [cardsOnDisplay, setCardsOnDisplay] = useState(
     returnRandomIntArray(4, [])
   );
-  const [cardsFlipped, setCardsFlipped] = useState(true);
+  const [cardsFlipped, setCardsFlipped] = useState(false);
 
   const deck = [
     ...Array(22)
@@ -38,7 +37,9 @@ export default function GameScreen({
           <TestCard2
             value={item}
             key={item}
-            onClick={() => onCardClick(item)}
+            onClick={() => {
+              onCardClick(item);
+            }}
             flipped={cardsFlipped}
           ></TestCard2>
         );
@@ -83,43 +84,47 @@ export default function GameScreen({
       }
       onLose();
     } else {
-      // add the clicked card to the clickedCards array
-      const newClickedCards = [...clickedCards, clickedValue];
-      setClickedCards(newClickedCards);
-      const newCurrentScore = currentScore + 1;
-      if (newCurrentScore === 22) {
-        setBestScore(22);
-        onWin();
-      }
-      setCurrentScore(newCurrentScore);
-      let newLevel = level;
-      if (newCurrentScore === levelDetails[level].maxScore) {
-        newLevel = newLevel + 1;
-        setLevel(newLevel);
-      }
-      // shuffle the deck with appropriate number of clicked cards. This depends on level and current number of clicked cards
-      if (newClickedCards.length === 1) {
-        setCardsOnDisplay(
-          returnShuffledArray([
-            newClickedCards[0],
-            ...returnRandomIntArray(3, newClickedCards),
-          ])
-        );
-      } else {
-        const previouslyClickedCards = returnShuffledArray(
-          newClickedCards
-        ).slice(0, levelDetails[newLevel].previousCards);
+      setCardsFlipped(true);
+      const firstCard = document.querySelector(".cardFront");
+      firstCard.addEventListener("transitionend", () => {
+        // add the clicked card to the clickedCards array
+        const newClickedCards = [...clickedCards, clickedValue];
+        setClickedCards(newClickedCards);
+        const newCurrentScore = currentScore + 1;
+        if (newCurrentScore === 22) {
+          setBestScore(22);
+          onWin();
+        }
+        setCurrentScore(newCurrentScore);
+        let newLevel = level;
+        if (newCurrentScore === levelDetails[level].maxScore) {
+          newLevel = newLevel + 1;
+          setLevel(newLevel);
+        }
+        // shuffle the deck with appropriate number of clicked cards. This depends on level and current number of clicked cards
+        if (newClickedCards.length === 1) {
+          setCardsOnDisplay(
+            returnShuffledArray([
+              newClickedCards[0],
+              ...returnRandomIntArray(3, newClickedCards),
+            ])
+          );
+        } else {
+          const previouslyClickedCards = returnShuffledArray(
+            newClickedCards
+          ).slice(0, levelDetails[newLevel].previousCards);
 
-        const nonClickedCards = returnRandomIntArray(
-          levelDetails[newLevel].totalCards -
-            levelDetails[newLevel].previousCards,
-          newClickedCards
-        );
+          const nonClickedCards = returnRandomIntArray(
+            levelDetails[newLevel].totalCards -
+              levelDetails[newLevel].previousCards,
+            newClickedCards
+          );
 
-        setCardsOnDisplay(
-          returnShuffledArray([...previouslyClickedCards, ...nonClickedCards])
-        );
-      }
+          setCardsOnDisplay(
+            returnShuffledArray([...previouslyClickedCards, ...nonClickedCards])
+          );
+        }
+      });
     }
   }
 
@@ -136,7 +141,28 @@ export default function GameScreen({
       </CardDisplay>
       <DifficultyDisplay level={level}></DifficultyDisplay>
       <GameUI onHome={onHome}></GameUI>
-      <button onClick={()=>{setCardsFlipped(!cardsFlipped)}}>TEST</button>
+      <button
+        onClick={() => {
+          setCardsFlipped(!cardsFlipped);
+          const target = document.querySelector(".cardFront");
+          function handleTransitionEnd() {
+            console.log("TRANS END");
+          }
+
+          target.addEventListener("transitionend", handleTransitionEnd, {
+            once: true,
+          });
+        }}
+      >
+        Flip cards
+      </button>
+      <button
+        onClick={() => {
+          setCardsOnDisplay(returnRandomIntArray(4, []));
+        }}
+      >
+        Load new cards
+      </button>
     </div>
   );
 }

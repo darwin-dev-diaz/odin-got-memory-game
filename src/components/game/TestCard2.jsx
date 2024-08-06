@@ -1,31 +1,25 @@
 /* eslint-disable react/prop-types */
 import cardBack from "./card-back.jpg";
 import "../../styles/TestCard2.css";
-import TestCardRotatingOne from "./TestCardRotatingOne";
+// import TestCardRotatingOne from "./TestCardRotatingOne";
+import Card from "./Card";
 
 export default function TestCard2({ value, onClick, flipped }) {
-  function onFlip() {
-    const front = document.getElementById("front" + value);
-    const back = document.getElementById("back" + value);
-    front.classList.toggle("flipped");
-    back.classList.toggle("flipped");
-  }
-  // issue is that its selecting
 
   return (
     <>
       <div className="container" onClick={onClick}>
         <div className="card-flippable">
           <div
-            id={"back" + value}
+            id={"back"}
             className={`cardBack ${flipped ? "flipped" : ""}`}
           >
             <img className="card-back-image" src={cardBack} alt="" />
           </div>
-          <TestCardRotatingOne
+          <Card
             flipped={flipped}
             value={value}
-          ></TestCardRotatingOne>
+          ></Card>
         </div>
       </div>
     </>
