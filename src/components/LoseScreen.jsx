@@ -5,10 +5,7 @@ import "../styles/NonGameScreen.css";
 export default function LoseScreen({ onHome, audioPlaying }) {
   useEffect(() => {
     const audio = document.querySelector("audio");
-    if (audioPlaying) {
-      audio.playbackRate = 0.7;
-    }
-
+    if (audioPlaying) audio.playbackRate = 0.7;
     return function cleanUp() {
       audio.playbackRate = 1;
     };
