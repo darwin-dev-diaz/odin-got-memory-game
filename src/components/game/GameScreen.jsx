@@ -7,6 +7,8 @@ import TestCard2 from "./TestCard2";
 
 import { useState, useEffect } from "react";
 
+let flippedO = true;
+
 export default function GameScreen({
   onLose,
   onWin,
@@ -21,7 +23,7 @@ export default function GameScreen({
     { previousCards: 11, totalCards: 12, maxScore: 22 },
   ];
   const [clickedCards, setClickedCards] = useState([]);
-  const [flipped, setFlipped] = useState(true);
+
   const [currentScore, setCurrentScore] = useState(0);
   const [cardsOnDisplay, setCardsOnDisplay] = useState(
     returnRandomIntArray(4, [])
@@ -38,7 +40,7 @@ export default function GameScreen({
             onClick={() => {
               onCardClick(item);
             }}
-            flipped={flipped}
+            flipped={flippedO}
           ></TestCard2>
         );
       }),
@@ -49,9 +51,9 @@ export default function GameScreen({
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
     async function flipCards() {
       await delay(1000);
-      // const cards = document.querySelectorAll(".cardFront, .cardBack");
-      // cards.forEach((card) => card.classList.remove("flipped"));
-      setFlipped(false);
+      const cards = document.querySelectorAll(".cardFront, .cardBack");
+      cards.forEach((card) => card.classList.remove("flipped"));
+      flippedO = false;
     }
 
     flipCards();
@@ -73,7 +75,8 @@ export default function GameScreen({
     return arr;
   }
 
-  function returnShuffledArray(array) {
+  function returnShuffledArray(array, where) {
+    console.log({where});
     array = typeof array === "undefined" ? cardsOnDisplay : array;
     let currentIndex = array.length;
     while (currentIndex != 0) {
@@ -95,10 +98,12 @@ export default function GameScreen({
       }
       onLose();
     } else {
-      setFlipped(true)
+      console.log("ON CARD CLICK CALLED")
+      flippedO = true;
       const cards = document.querySelectorAll(".cardFront, .cardBack");
       cards.forEach((card) => card.classList.add("flipped"));
       cards[0].addEventListener("transitionend", () => {
+        console.log("CODE INSIDE TRANS END CALLED")
         // add the clicked card to the clickedCards array
         const newClickedCards = [...clickedCards, clickedValue];
         setClickedCards(newClickedCards);
@@ -119,11 +124,11 @@ export default function GameScreen({
             returnShuffledArray([
               newClickedCards[0],
               ...returnRandomIntArray(3, newClickedCards),
-            ])
+            ], "first")
           );
         } else {
           const previouslyClickedCards = returnShuffledArray(
-            newClickedCards
+            newClickedCards, "second"
           ).slice(0, levelDetails[newLevel].previousCards);
 
           const nonClickedCards = returnRandomIntArray(
@@ -133,10 +138,10 @@ export default function GameScreen({
           );
 
           setCardsOnDisplay(
-            returnShuffledArray([...previouslyClickedCards, ...nonClickedCards])
+            returnShuffledArray([...previouslyClickedCards, ...nonClickedCards], "third")
           );
         }
-      });
+      }, {once: true});
     }
   }
 
