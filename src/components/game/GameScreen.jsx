@@ -3,7 +3,7 @@ import "../../styles/GameScreen.css";
 import ScoreDisplay from "./ScoreDisplay";
 import CardDisplay from "./CardDisplay";
 import DifficultyDisplay from "./DifficultyDisplay";
-import TestCard2 from "./TestCard2";
+import Card from "./Card";
 
 import { useState, useEffect } from "react";
 
@@ -34,14 +34,14 @@ export default function GameScreen({
       .keys()
       .map((item) => {
         return (
-          <TestCard2
+          <Card
             key={item}
             characterObj={characterInfoList[item]}
             onClick={() => {
               onCardClick(item);
             }}
             flipped={flippedO}
-          ></TestCard2>
+          ></Card>
         );
       }),
   ];
