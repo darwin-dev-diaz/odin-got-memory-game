@@ -5,16 +5,15 @@ import CardDisplay from "./CardDisplay";
 import DifficultyDisplay from "./DifficultyDisplay";
 import TestCard2 from "./TestCard2";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function GameScreen({
   onLose,
   onWin,
   bestScore,
   setBestScore,
-  characterInfoList
+  characterInfoList,
 }) {
-
   const [level, setLevel] = useState(0);
   const levelDetails = [
     { previousCards: 2, totalCards: 4, maxScore: 5 },
@@ -22,6 +21,7 @@ export default function GameScreen({
     { previousCards: 11, totalCards: 12, maxScore: 22 },
   ];
   const [clickedCards, setClickedCards] = useState([]);
+  const [cardsFlipped, setCardsFlipped] = useState(true);
   const [currentScore, setCurrentScore] = useState(0);
   const [cardsOnDisplay, setCardsOnDisplay] = useState(
     returnRandomIntArray(4, [])
@@ -38,10 +38,23 @@ export default function GameScreen({
             onClick={() => {
               onCardClick(item);
             }}
+            flipped={true}
           ></TestCard2>
         );
       }),
   ];
+
+  // get cards to flip on load
+  useEffect(() => {
+    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    async function flipCards() {
+      const cards = document.querySelectorAll(".cardFront, .cardBack");
+      await delay(1000)
+      cards.forEach(card=>card.classList.remove("flipped"))
+    }
+
+    flipCards()
+  }, []);
 
   function returnRandomIntArray(quantity, newClickedCards) {
     // returns an specified number of random ints from 0-21
