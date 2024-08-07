@@ -16,7 +16,11 @@ function App() {
   const [audioPlaying, setAudioPlaying] = useState(false);
   const screenArray = [
     <HomeScreen key={0} onPlay={() => setCurrentScreen(3)} />,
-    <LoseScreen key={1} onHome={() => setCurrentScreen(0)} />,
+    <LoseScreen
+      key={1}
+      onHome={() => setCurrentScreen(0)}
+      audioPlaying={audioPlaying}
+    />,
     <WinScreen key={2} onHome={() => setCurrentScreen(0)} />,
     <GameScreen
       key={3}

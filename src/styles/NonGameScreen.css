@@ -21,3 +21,9 @@
     width: 25%;
     padding: 20px;
 }
+
+.lose-title{
+    font-size: 90px;
+    font-weight: 500;
+    color: brown;
+}
