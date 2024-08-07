@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./styles/reset.css";
 import "./styles/App.css";
 import HomeScreen from "./components/HomeScreen";
@@ -14,6 +14,27 @@ function App() {
   const [currentScreen, setCurrentScreen] = useState(0);
   const [bestScore, setBestScore] = useState(0);
   const [audioPlaying, setAudioPlaying] = useState(false);
+  const [characterInfoList, setCharacterInfoList] = useState([]);
+
+  useEffect(() => {
+    async function getCharacterInfo(id) {
+      const response = await fetch(
+        `https://thronesapi.com/api/v2/Characters/${id}`,
+        {
+          mode: "cors",
+        }
+      );
+      const json = await response.json();
+      const name = json.firstName + " " + json.lastName;
+      const imageUrl = json.imageUrl;
+      setCharacterInfoList((prevList) => [...prevList, { name, imageUrl }]);
+    }
+
+    const ids = [...new Array(22).keys()];
+    ids.forEach((id) => getCharacterInfo(id));
+  }, []);
+
+
   const screenArray = [
     <HomeScreen key={0} onPlay={() => setCurrentScreen(3)} />,
     <LoseScreen
@@ -29,8 +50,12 @@ function App() {
       onWin={() => setCurrentScreen(2)}
       bestScore={bestScore}
       setBestScore={setBestScore}
+      characterInfoList={characterInfoList}
     />,
   ];
+
+
+  
 
   return (
     <>

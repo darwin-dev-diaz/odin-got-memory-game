@@ -7,8 +7,7 @@ export default function HomeScreen({onPlay}) {
       <h1 className="screen-title">GAME OF MEMEROY</h1>
       <button className="play-button" onClick={onPlay}>Play</button>
       <div className="home-screen-info">
-        For the best experience, please enable game music using the melody
-        button below!
+        For the best experience, enable music using the melody button below!
       </div>
     </div>
   );

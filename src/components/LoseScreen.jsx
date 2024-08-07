@@ -9,7 +9,7 @@ export default function LoseScreen({ onHome, audioPlaying }) {
     return function cleanUp() {
       audio.playbackRate = 1;
     };
-  }, []);
+  }, [audioPlaying]);
 
   return (
     <div className="screen">

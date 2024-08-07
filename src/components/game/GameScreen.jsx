@@ -5,14 +5,14 @@ import CardDisplay from "./CardDisplay";
 import DifficultyDisplay from "./DifficultyDisplay";
 import TestCard2 from "./TestCard2";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function GameScreen({
-  onHome,
   onLose,
   onWin,
   bestScore,
   setBestScore,
+  characterInfoList
 }) {
 
   const [level, setLevel] = useState(0);
@@ -26,28 +26,6 @@ export default function GameScreen({
   const [cardsOnDisplay, setCardsOnDisplay] = useState(
     returnRandomIntArray(4, [])
   );
-
-  const [characterInfoList, setCharacterInfoList] = useState([]);
-
-  useEffect(() => {
-    async function getCharacterInfo(id) {
-      const response = await fetch(
-        `https://thronesapi.com/api/v2/Characters/${id}`,
-        {
-          mode: "cors",
-        }
-      );
-      const json = await response.json();
-      const name = json.firstName + " " + json.lastName;
-      const imageUrl = json.imageUrl;
-      setCharacterInfoList((prevList) => [...prevList, { name, imageUrl }]);
-    }
-
-    const ids = [...new Array(22).keys()];
-    ids.forEach((id) => getCharacterInfo(id));
-  }, []);
-
-  console.log({ characterInfoList });
 
   const deck = [
     ...Array(22)
