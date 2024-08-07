@@ -21,7 +21,7 @@ export default function GameScreen({
     { previousCards: 11, totalCards: 12, maxScore: 22 },
   ];
   const [clickedCards, setClickedCards] = useState([]);
-  const [cardsFlipped, setCardsFlipped] = useState(true);
+  const [flipped, setFlipped] = useState(true);
   const [currentScore, setCurrentScore] = useState(0);
   const [cardsOnDisplay, setCardsOnDisplay] = useState(
     returnRandomIntArray(4, [])
@@ -38,7 +38,7 @@ export default function GameScreen({
             onClick={() => {
               onCardClick(item);
             }}
-            flipped={true}
+            flipped={flipped}
           ></TestCard2>
         );
       }),
@@ -48,13 +48,14 @@ export default function GameScreen({
   useEffect(() => {
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
     async function flipCards() {
-      const cards = document.querySelectorAll(".cardFront, .cardBack");
-      await delay(1000)
-      cards.forEach(card=>card.classList.remove("flipped"))
+      await delay(1000);
+      // const cards = document.querySelectorAll(".cardFront, .cardBack");
+      // cards.forEach((card) => card.classList.remove("flipped"));
+      setFlipped(false);
     }
 
-    flipCards()
-  }, []);
+    flipCards();
+  }, [currentScore]);
 
   function returnRandomIntArray(quantity, newClickedCards) {
     // returns an specified number of random ints from 0-21
@@ -94,43 +95,48 @@ export default function GameScreen({
       }
       onLose();
     } else {
-      // add the clicked card to the clickedCards array
-      const newClickedCards = [...clickedCards, clickedValue];
-      setClickedCards(newClickedCards);
-      const newCurrentScore = currentScore + 1;
-      if (newCurrentScore === 22) {
-        setBestScore(22);
-        onWin();
-      }
-      setCurrentScore(newCurrentScore);
-      let newLevel = level;
-      if (newCurrentScore === levelDetails[level].maxScore) {
-        newLevel = newLevel + 1;
-        setLevel(newLevel);
-      }
-      // shuffle the deck with appropriate number of clicked cards. This depends on level and current number of clicked cards
-      if (newClickedCards.length === 1) {
-        setCardsOnDisplay(
-          returnShuffledArray([
-            newClickedCards[0],
-            ...returnRandomIntArray(3, newClickedCards),
-          ])
-        );
-      } else {
-        const previouslyClickedCards = returnShuffledArray(
-          newClickedCards
-        ).slice(0, levelDetails[newLevel].previousCards);
+      setFlipped(true)
+      const cards = document.querySelectorAll(".cardFront, .cardBack");
+      cards.forEach((card) => card.classList.add("flipped"));
+      cards[0].addEventListener("transitionend", () => {
+        // add the clicked card to the clickedCards array
+        const newClickedCards = [...clickedCards, clickedValue];
+        setClickedCards(newClickedCards);
+        const newCurrentScore = currentScore + 1;
+        if (newCurrentScore === 22) {
+          setBestScore(22);
+          onWin();
+        }
+        setCurrentScore(newCurrentScore);
+        let newLevel = level;
+        if (newCurrentScore === levelDetails[level].maxScore) {
+          newLevel = newLevel + 1;
+          setLevel(newLevel);
+        }
+        // shuffle the deck with appropriate number of clicked cards. This depends on level and current number of clicked cards
+        if (newClickedCards.length === 1) {
+          setCardsOnDisplay(
+            returnShuffledArray([
+              newClickedCards[0],
+              ...returnRandomIntArray(3, newClickedCards),
+            ])
+          );
+        } else {
+          const previouslyClickedCards = returnShuffledArray(
+            newClickedCards
+          ).slice(0, levelDetails[newLevel].previousCards);
 
-        const nonClickedCards = returnRandomIntArray(
-          levelDetails[newLevel].totalCards -
-            levelDetails[newLevel].previousCards,
-          newClickedCards
-        );
+          const nonClickedCards = returnRandomIntArray(
+            levelDetails[newLevel].totalCards -
+              levelDetails[newLevel].previousCards,
+            newClickedCards
+          );
 
-        setCardsOnDisplay(
-          returnShuffledArray([...previouslyClickedCards, ...nonClickedCards])
-        );
-      }
+          setCardsOnDisplay(
+            returnShuffledArray([...previouslyClickedCards, ...nonClickedCards])
+          );
+        }
+      });
     }
   }
 
