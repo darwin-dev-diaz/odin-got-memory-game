@@ -11,7 +11,7 @@ import MusicOffIcon from "./assets/MusicOffIcon.jsx";
 import MusicOnIcon from "./assets/MusicOnIcon.jsx";
 
 function App() {
-  const [currentScreen, setCurrentScreen] = useState(3);
+  const [currentScreen, setCurrentScreen] = useState(0);
   const [bestScore, setBestScore] = useState(0);
   const [audioPlaying, setAudioPlaying] = useState(false);
   const [characterInfoList, setCharacterInfoList] = useState([]);

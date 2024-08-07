@@ -23,7 +23,7 @@ button {
 .cardFront,
 .cardBack {
   box-sizing: border-box;
-  border-radius: 0.25rem;
+  border-radius: 10px;
   height: 100%;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -32,7 +32,8 @@ button {
   position: absolute;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  background-color: #ebf4ff;
+  border: 2px solid rgba(96, 96, 96, 0.451);
+  /* background-color: #ebf4ff; */
 }
 .cardBack {
   transform: perspective(1000px) rotateY(180deg);

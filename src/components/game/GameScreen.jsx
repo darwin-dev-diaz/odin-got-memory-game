@@ -75,8 +75,7 @@ export default function GameScreen({
     return arr;
   }
 
-  function returnShuffledArray(array, where) {
-    console.log({where});
+  function returnShuffledArray(array) {
     array = typeof array === "undefined" ? cardsOnDisplay : array;
     let currentIndex = array.length;
     while (currentIndex != 0) {
@@ -98,50 +97,55 @@ export default function GameScreen({
       }
       onLose();
     } else {
-      console.log("ON CARD CLICK CALLED")
       flippedO = true;
       const cards = document.querySelectorAll(".cardFront, .cardBack");
       cards.forEach((card) => card.classList.add("flipped"));
-      cards[0].addEventListener("transitionend", () => {
-        console.log("CODE INSIDE TRANS END CALLED")
-        // add the clicked card to the clickedCards array
-        const newClickedCards = [...clickedCards, clickedValue];
-        setClickedCards(newClickedCards);
-        const newCurrentScore = currentScore + 1;
-        if (newCurrentScore === 22) {
-          setBestScore(22);
-          onWin();
-        }
-        setCurrentScore(newCurrentScore);
-        let newLevel = level;
-        if (newCurrentScore === levelDetails[level].maxScore) {
-          newLevel = newLevel + 1;
-          setLevel(newLevel);
-        }
-        // shuffle the deck with appropriate number of clicked cards. This depends on level and current number of clicked cards
-        if (newClickedCards.length === 1) {
-          setCardsOnDisplay(
-            returnShuffledArray([
-              newClickedCards[0],
-              ...returnRandomIntArray(3, newClickedCards),
-            ], "first")
-          );
-        } else {
-          const previouslyClickedCards = returnShuffledArray(
-            newClickedCards, "second"
-          ).slice(0, levelDetails[newLevel].previousCards);
+      cards[0].addEventListener(
+        "transitionend",
+        () => {
+          // add the clicked card to the clickedCards array
+          const newClickedCards = [...clickedCards, clickedValue];
+          setClickedCards(newClickedCards);
+          const newCurrentScore = currentScore + 1;
+          if (newCurrentScore === 22) {
+            setBestScore(22);
+            onWin();
+          }
+          setCurrentScore(newCurrentScore);
+          let newLevel = level;
+          if (newCurrentScore === levelDetails[level].maxScore) {
+            newLevel = newLevel + 1;
+            setLevel(newLevel);
+          }
+          // shuffle the deck with appropriate number of clicked cards. This depends on level and current number of clicked cards
+          if (newClickedCards.length === 1) {
+            setCardsOnDisplay(
+              returnShuffledArray([
+                newClickedCards[0],
+                ...returnRandomIntArray(3, newClickedCards),
+              ])
+            );
+          } else {
+            const previouslyClickedCards = returnShuffledArray(
+              newClickedCards
+            ).slice(0, levelDetails[newLevel].previousCards);
 
-          const nonClickedCards = returnRandomIntArray(
-            levelDetails[newLevel].totalCards -
-              levelDetails[newLevel].previousCards,
-            newClickedCards
-          );
+            const nonClickedCards = returnRandomIntArray(
+              levelDetails[newLevel].totalCards -
+                levelDetails[newLevel].previousCards,
+              newClickedCards
+            );
 
-          setCardsOnDisplay(
-            returnShuffledArray([...previouslyClickedCards, ...nonClickedCards], "third")
-          );
-        }
-      }, {once: true});
+            setCardsOnDisplay(
+              returnShuffledArray([
+                ...previouslyClickedCards,
+                ...nonClickedCards,
+              ])
+            );
+          }
+        },
+        { once: true }
+      );
     }
   }
 
