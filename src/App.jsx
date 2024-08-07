@@ -36,22 +36,24 @@ function App() {
       </video>
       <div className="app-container">
         <div className="app">{screenArray[currentScreen]} </div>
-        <button
-          className="toggle-music-button"
-          onClick={() => {
-            const audio = document.querySelector("audio");
-            if (audioPlaying) {
-              audio.pause();
-              setAudioPlaying(false);
-            } else {
-              audio.volume = 0.6;
-              audio.play();
-              setAudioPlaying(true);
-            }
-          }}
-        >
-          {audioPlaying ? <MusicOffIcon /> : <MusicOnIcon />}
-        </button>
+        <div className="ui-container">
+          <button
+            className="toggle-music-button"
+            onClick={() => {
+              const audio = document.querySelector("audio");
+              if (audioPlaying) {
+                audio.pause();
+                setAudioPlaying(false);
+              } else {
+                audio.volume = 0.6;
+                audio.play();
+                setAudioPlaying(true);
+              }
+            }}
+          >
+            {audioPlaying ? <MusicOffIcon /> : <MusicOnIcon />}
+          </button>
+        </div>
       </div>
     </>
   );
